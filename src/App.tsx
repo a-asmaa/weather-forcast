@@ -1,24 +1,79 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Card, Layout, Spin, Typography } from 'antd';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Content } from 'antd/lib/layout/layout';
+import { getInfo } from './service/weather-details';
+import { Data, initialData } from './module/response';
+import Home from './component/home';
+import Dashboard from './component/city-dashboard';
+import { Route, Routes } from 'react-router-dom';
+
 
 function App() {
+
+  const [data, setData] = useState({ city: '', country: '' })
+  const [load, setLoad] = useState(false)
+  const [weather, setWeather] = useState<Data>()
+
+
+
+  useEffect(() => {
+    setLoad(true)
+
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          console.log(pos);
+
+          const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
+
+          fetch(geoApiUrl).then(res => res.json()).then(data => {
+            console.log(data)
+
+            setData({ city: data.city, country: data.countryName })
+
+          })
+
+          let weatherInfo = await getInfo(pos.lat, pos.lng)
+
+          if (weatherInfo) setWeather(weatherInfo)
+
+          setLoad(false)
+        },
+        () => {
+          console.log("error");
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      console.log("error");
+
+    }
+  }, [])
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Spin
+        spinning={load}
+        indicator={<LoadingOutlined style={{ fontSize: 80 }} spin />}
+      >
+        <Layout style={{ minHeight: "100vh" }}>
+          <Content>
+            <Routes>
+              <Route path="/" element={<Home data={data} weather={weather!} />} />
+              <Route path="/:city_name" element={<Dashboard country={data.country} />} />
+            </Routes>
+          </Content>
+        </Layout>
+      </Spin>
     </div>
   );
 }
