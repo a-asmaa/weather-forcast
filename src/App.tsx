@@ -8,6 +8,7 @@ import { Data, initialData } from './module/response';
 import Home from './component/home';
 import Dashboard from './component/city-dashboard';
 import { Route, Routes } from 'react-router-dom';
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 
 function App() {
@@ -23,34 +24,38 @@ function App() {
 
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
+      try {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
 
-          console.log(pos);
+            console.log(pos);
 
-          const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
+            const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
 
-          fetch(geoApiUrl).then(res => res.json()).then(data => {
-            console.log(data)
+            fetch(geoApiUrl).then(res => res.json()).then(data => {
+              console.log(data)
 
-            setData({ city: data.city, country: data.countryName })
+              setData({ city: data.city, country: data.countryName })
 
+            })
+
+            let weatherInfo = await getInfo(pos.lat, pos.lng, 6)
+
+            if (weatherInfo) setWeather(weatherInfo)
+
+            setLoad(false)
           })
 
-          let weatherInfo = await getInfo(pos.lat, pos.lng)
 
-          if (weatherInfo) setWeather(weatherInfo)
+      } catch (error) {
+        console.log(error);
+        setLoad(false)
 
-          setLoad(false)
-        },
-        () => {
-          console.log("error");
-        }
-      );
+      }
     } else {
       // Browser doesn't support Geolocation
       console.log("error");

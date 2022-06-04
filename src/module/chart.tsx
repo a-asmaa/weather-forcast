@@ -1,4 +1,4 @@
 export interface Chart {
-    date: string;
-    temp: Number
+    date: Date | null;
+    close: Number
 }
