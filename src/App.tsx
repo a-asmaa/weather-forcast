@@ -23,44 +23,50 @@ function App() {
     setLoad(true)
 
 
-    if (navigator.geolocation) {
-      try {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
+    // fetch("https://api.ipify.org?format=json").then(res => res.json()).then((data) =>
 
-            console.log(pos);
+    //   // Setting text of element P with id gfg
+    //   console.log(data)
+    // )
 
-            const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
+    // if (navigator.geolocation) {
+    try {
+      // navigator.geolocation.getCurrentPosition(
+      //   async (position) => {
+      //     const pos = {
+      //       lat: position.coords.latitude,
+      //       lng: position.coords.longitude,
+      //     };
 
-            fetch(geoApiUrl).then(res => res.json()).then(data => {
-              console.log(data)
+      //     console.log(pos);
 
-              setData({ city: data.city, country: data.countryName })
+      // const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
+      const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en`
 
-            })
+      fetch(geoApiUrl).then(res => res.json()).then(async data => {
+        console.log(data)
 
-            let weatherInfo = await getInfo(pos.lat, pos.lng, 6)
+        setData({ city: data.city, country: data.countryName })
 
-            if (weatherInfo) setWeather(weatherInfo)
+        let weatherInfo = await getInfo(data.latitude, data.longitude, 6)
 
-            setLoad(false)
-          })
+        if (weatherInfo) setWeather(weatherInfo)
 
-
-      } catch (error) {
-        console.log(error);
         setLoad(false)
+      })
 
-      }
-    } else {
-      // Browser doesn't support Geolocation
-      console.log("error");
 
     }
+    catch (error) {
+      console.log(error);
+      setLoad(false)
+    }
+    //}
+    // } else {
+    // Browser doesn't support Geolocation
+    //   console.log("error");
+
+    // }
   }, [])
 
 

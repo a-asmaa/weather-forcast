@@ -5,7 +5,7 @@ import { Data, Hourly, Weather } from '../module/response';
 import { getHistoricalData, getInfo } from '../service/weather-details';
 import LineChart from './line-chart';
 import * as d3 from 'd3';
-import { Button, Card, Segmented, Select, Space, Spin, Table, Tabs } from 'antd';
+import { Button, Card, Divider, Segmented, Select, Space, Spin, Table, Tabs } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { getDaysByMonth, months, years } from '../module/data';
@@ -43,6 +43,7 @@ const columns = [
         title: 'Temp.',
         dataIndex: 'temp',
         key: 'temp',
+
     },
     {
         title: 'Feels Like',
@@ -117,11 +118,11 @@ function Dashboard(props: { country: string }) {
                             time: data[i][count].time === "0" ? "12:00 AM" : moment(data[i][count].time, 'hmm').format('hh:mm A'),
                             Conditions: { img: data[i][count].weatherIconUrl[0].value, val: data[i][count].weatherDesc[0].value },
                             temp: data[i][count].tempC + " °C",
-                            Feels: `${data[i][count].FeelsLikeC} °C`,
+                            Feels: `🌡️ ${data[i][count].FeelsLikeC} °C`,
                             Precip: data[i][count].precipInches + ' in',
-                            Cloud: data[i][count].cloudcover + " %",
+                            Cloud: '☁ ' + data[i][count].cloudcover + " %",
                             Humidity: data[i][count].humidity + " %",
-                            wind: data[i][count].windspeedKmph + " km/h",
+                            wind: '💨' + data[i][count].windspeedKmph + " km/h",
                             Pressure: data[i][count].precipInches + " in",
                         })
                     }
@@ -212,10 +213,24 @@ function Dashboard(props: { country: string }) {
             <Card >
                 <Space style={{ justifyContent: 'space-between', textAlign: 'left', width: '100%' }}>
                     <div>
-                        <h1> {weather?.request[0].query} </h1>
-                        <img src={weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
-                        <span style={{ fontSize: 20, fontWeight: '500' }}> {weather?.weather[0].maxtempC}°C  </span>
-                        <span>  {weather?.weather[0].mintempC}°C </span>
+                        <h3 > {moment().format('dddd hh:mm A')}  </h3>
+
+
+                        <Space size='middle' style={{ justifyContent: 'space-between', textAlign: 'left', width: '100%', marginTop: 5 }}>
+
+                            <img src={weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
+                            <span style={{ fontSize: 20, fontWeight: '500' }}> {weather?.weather[0].maxtempC}°C  </span>
+                            {/* <span>  {weather?.weather[0].mintempC}°C </span> */}
+                            <Divider type='vertical' style={{ height: 60, width: 5 }} className="ant-col ant-col-xs-0 ant-col-sm-0 ant-col-md-2 ant-col-lg-2 ant-col-xl-2" />
+
+                            <div className='dashboard-header ant-col ant-col-xs-0 ant-col-sm-0 ant-col-md-24 ant-col-lg-24 ant-col-xl-24'>
+
+                                <h4> Feel like: {weather?.current_condition[0].FeelsLikeC} °C  </h4>
+                                <h4> Humidity: {weather?.current_condition[0].humidity}% </h4>
+                                <h4> Wind Speed: {weather?.current_condition[0].windspeedKmph} km/h </h4>
+                            </div>
+                        </Space>
+
                         {/* <h3> Humidity: {weather?.current_condition[0].humidity}% </h3> */}
                         <br />
                         {/* <Space style={{ marginTop: 20 }}>
@@ -232,9 +247,11 @@ function Dashboard(props: { country: string }) {
                         </Space> */}
                     </div>
                     <div>
+                        <h1> {weather?.request[0].query} </h1>
+
                         {/* <img src={weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
                         <h4 style={{ textAlign: 'center' }}> {weather?.current_condition[0].weatherDesc[0].value}</h4> */}
-                        <Space style={{ marginTop: 20 }}>
+                        <Space style={{ marginTop: 10 }}>
                             <div>
                                 <h3 style={{ marginBottom: 0 }}> Sunrise  </h3>
                                 <span> {weather?.weather[0].astronomy[0].sunrise} </span>
@@ -277,7 +294,7 @@ function Dashboard(props: { country: string }) {
 
                     <TabPane tab="Hourly" key="1">
                         <h2 style={{ textAlign: 'left', marginTop: 20 }}> Hourly Forecast </h2>
-                        <Table dataSource={hoursData} columns={columns} />;
+                        <Table dataSource={hoursData} columns={columns} scroll={{ x: true }} />;
                     </TabPane>
 
                     <TabPane tab="Weekly" key="2">
