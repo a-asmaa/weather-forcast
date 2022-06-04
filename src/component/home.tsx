@@ -26,7 +26,6 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
         <div className='container'>
             <Title level={2}>  Weather Forecast </Title>
 
-
             <Select
                 showSearch
                 placeholder="search by city"
@@ -51,7 +50,9 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
 
                         <Space size='large' >
                             <Title level={2}> {props.data.country + ', ' + props.data.city} </Title>
-                            <img src={props.weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
+                            <img width={55} src={
+                                props.weather?.current_condition[0].weatherDesc[0].value === "Sunny" ? "https://clipart.world/wp-content/uploads/2020/09/Bright-sun-png.png" :
+                                    props.weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
 
                         </Space>
 
@@ -62,7 +63,7 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
                     </Card>
                 </Col>
                 <Col xs={20} md={16} lg={14} xl={13} className="d-flex flex-column justify-content-between">
-                    <Card bordered={false} style={{ padding: 20, borderRadius: 10 }}>
+                    <Card bordered={false} style={{ padding: 14, borderRadius: 10 }}>
 
                         <Space className="ant-row" size='large'>
                             <div style={{ textAlign: 'left' }} className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24">
@@ -94,7 +95,10 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
                         if (index !== 0)
                             return <Card.Grid style={gridStyle} key={index}>
                                 <h3> {moment(day.date).format('dddd DD')}</h3>
-                                <img src={day.hourly[5].weatherIconUrl[0].value} alt='' />
+                                <img width='70' src={
+                                    day.hourly[5].weatherDesc[0].value === "Sunny" ? "https://clipart.world/wp-content/uploads/2020/09/Bright-sun-png.png" :
+                                        day.hourly[5].weatherDesc[0].value === "Clear" ? "https://www.wunderground.com/static/i/c/v4/31.svg" :
+                                            day.hourly[5].weatherIconUrl[0].value} alt='' />
 
                                 <h2> {day.maxtempC + ' / ' + day.mintempC} °C </h2>
                                 {/* <p> {day.hourly[5].weatherDesc[0].value} </p>  13 */}

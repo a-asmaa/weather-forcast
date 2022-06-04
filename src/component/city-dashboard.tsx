@@ -19,6 +19,7 @@ const gridStyle: React.CSSProperties = {
     textAlign: 'center',
     borderRadius: '10px',
     margin: 5,
+    background: 'rgb(235 238 240 / 20%)'
     // display: 'flex',
     // justifyContent: 'center'
 };
@@ -121,7 +122,7 @@ function Dashboard(props: { country: string }) {
                             key: Math.random(),
                             time: data[i][count].time === "0" ? "12:00 AM" : moment(data[i][count].time, 'hmm').format('hh:mm A'),
                             Conditions: {
-                                img: data[i][count].weatherDesc[0].value === "Sunny" ? "https://www.wunderground.com/static/i/c/v4/32.svg" :
+                                img: data[i][count].weatherDesc[0].value === "Sunny" ? "https://clipart.world/wp-content/uploads/2020/09/Bright-sun-png.png" :
                                     data[i][count].weatherDesc[0].value === "Clear" ? "https://www.wunderground.com/static/i/c/v4/31.svg"
                                         : data[i][count].weatherIconUrl[0].value, val: data[i][count].weatherDesc[0].value
                             },
@@ -391,7 +392,7 @@ function Dashboard(props: { country: string }) {
                             style={{ marginBottom: 10 }}
                         />
                         <br />
-                        <Space>
+                        <Space wrap>
                             {category !== "Monthly" &&
                                 <Select defaultValue="lucy" style={{ width: 120 }}
                                     onChange={e => handleChange(e, 'day')}
@@ -412,7 +413,14 @@ function Dashboard(props: { country: string }) {
 
                             <Button type="primary" onClick={async () => {
 
+                                setChartData(prev => {
+                                    return {
+                                        ...prev,
+                                        history: []
+                                    }
+                                })
                                 setLoad(true)
+
 
                                 let monthD = getDaysByMonth(date.month);
 
@@ -430,8 +438,12 @@ function Dashboard(props: { country: string }) {
                                     if (category === "Daily") {
                                         for (let i = 0; i < data.weather[0].hourly.length; i++) {
                                             list.push({
-                                                date: data.weather[0].hourly[i].time === "0" ? "000" : data.weather[0].hourly[i].time,
-                                                temp: Number(data.weather[0].hourly[i].tempC)
+                                                humidity: data.weather[0].hourly[i].humidity + "%",
+                                                date: data.weather[0].hourly[i].time === "0" ? "12:00 AM" : moment(data.weather[0].hourly[i].time, 'hmm').format('hh:mm A'),
+                                                temp: Number(data.weather[0].hourly[i].tempC),
+                                                pressure: data.weather[0].hourly[i].pressureInches + " in",
+                                                wind: data.weather[0].hourly[i].windspeedKmph + " km/h",
+
                                             })
                                         }
 
@@ -460,7 +472,33 @@ function Dashboard(props: { country: string }) {
 
                         </Space>
 
-                        {chartData.history.length > 0 && <LineChart data={chartData.history} type={category === "Daily" ? "Daily" : "Weekly"} />}
+                        {
+                            chartData.history.length > 0 && category === "Daily" ?
+
+                                <Card style={{ background: 'transparent', display: 'flex', justifyContent: 'center', marginTop: 20 }} bordered={false} >
+
+                                    {
+                                        chartData.history.map((day, index) => {
+                                            if (index !== 0)
+                                                return <Card.Grid style={gridStyle} key={index}>
+                                                    <h3> {day.date}</h3>
+                                                    {/* <img src={day.hourly[5].weatherIconUrl[0].value} alt='' /> */}
+
+                                                    <h2> 🌡️ {day.temp} </h2>
+                                                    <h3> 💨 {day.wind}  </h3>
+                                                    <h3> 💦 {day.humidity} </h3>
+                                                    {/* <p> {day.hourly[5].weatherDesc[0].value} </p> */}
+                                                </Card.Grid>
+                                        })
+                                    }
+
+                                </Card>
+                                :
+                                chartData.history.length > 0 && <LineChart data={chartData.history} type={"Weekly"} />
+                        }
+
+
+
 
                     </TabPane>
                 </Tabs>

@@ -21,13 +21,6 @@
     "country": "Egypt"
   },
   {
-    "key": 3,
-    "value": "Madīnat as Sādis min Uktūbar",
-    "lat": "29.9361",
-    "lng": "30.9269",
-    "country": "Egypt"
-  },
-  {
     "key": 4,
     "value": "Shubrā al Khaymah",
     "lat": "30.1286",
@@ -39,13 +32,6 @@
     "value": "Al Manşūrah",
     "lat": "31.0500",
     "lng": "31.3833",
-    "country": "Egypt"
-  },
-  {
-    "key": 6,
-    "value": "Ḩalwān",
-    "lat": "29.8419",
-    "lng": "31.3342",
     "country": "Egypt"
   },
   {
@@ -88,13 +74,6 @@
     "value": "Al Fayyūm",
     "lat": "29.3000",
     "lng": "30.8333",
-    "country": "Egypt"
-  },
-  {
-    "key": 13,
-    "value": "Az Zaqāzīq",
-    "lat": "30.5667",
-    "lng": "31.5000",
     "country": "Egypt"
   },
   {
@@ -224,13 +203,6 @@
     "country": "Egypt"
   },
   {
-    "key": 32,
-    "value": "keyfū",
-    "lat": "24.9781",
-    "lng": "32.8789",
-    "country": "Egypt"
-  },
-  {
     "key": 33,
     "value": "Mīt Ghamr",
     "lat": "30.7192",
@@ -354,13 +326,6 @@
     "value": "Hihyā",
     "lat": "30.6687",
     "lng": "31.5904",
-    "country": "Egypt"
-  },
-  {
-    "key": 51,
-    "value": "Samannūd",
-    "lat": "30.9622",
-    "lng": "31.2425",
     "country": "Egypt"
   },
   {
