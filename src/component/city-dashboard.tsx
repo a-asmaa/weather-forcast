@@ -245,26 +245,10 @@ function Dashboard(props: { country: string }) {
                             </div>
                         </Space>
 
-                        {/* <h3> Humidity: {weather?.current_condition[0].humidity}% </h3> */}
-                        <br />
-                        {/* <Space style={{ marginTop: 20 }}>
-                            <div>
-                                <h3 style={{ marginBottom: 0 }}> Sunrise  </h3>
-                                <span> {weather?.weather[0].astronomy[0].sunrise} </span>
-                            </div>
-
-                            <div>
-                                <h3 style={{ marginBottom: 0 }}> Sunset  </h3>
-                                <span> {weather?.weather[0].astronomy[0].sunset} </span>
-                            </div>
-
-                        </Space> */}
                     </div>
                     <div>
                         <h1> {weather?.request[0].query} </h1>
 
-                        {/* <img src={weather?.current_condition[0].weatherIconUrl[0].value} alt="" />
-                        <h4 style={{ textAlign: 'center' }}> {weather?.current_condition[0].weatherDesc[0].value}</h4> */}
                         <Space style={{ marginTop: 10 }}>
                             <div>
                                 <h3 style={{ marginBottom: 0 }}> Sunrise  </h3>
@@ -284,69 +268,12 @@ function Dashboard(props: { country: string }) {
             </Card>
 
 
-            {/* <h2 style={{ textAlign: 'left', marginTop: 20 }}> Hourly Forecast </h2>
-            <Card style={{ marginTop: 20 }} >
-
-                {hoursData &&
-                    hoursData.slice(0, 6).map((day: Hourly) => {
-
-                        return <Card.Grid style={gridStyle}>
-                            <h3> {moment(day.time, 'hmm').format('hh:mm A')} </h3>
-                            <img src={day.weatherIconUrl[0].value} alt={day.weatherDesc[0].value} style={{ marginBottom: 10 }} />
-                            <h2> {day.tempC} °C </h2>
-
-                           // <h4 style={{ marginTop: '10px' }}>  🌧️ {day.chanceofrain} %  </h4>
-                        </Card.Grid>
-                    })
-                }
-
-            </Card> */}
-
             <div className="card-container">
 
                 <Tabs defaultActiveKey="1" type='card'>
 
                     <TabPane tab="Hourly" key="1">
                         <h2 style={{ textAlign: 'left', marginTop: 20 }}> Hourly Forecast for Today </h2>
-
-                        {/* <Space style={{ margin: '20px 0', gap: 50, alignItems: 'start' }} >
-                            <Space size={'large'}>
-                                <span style={{ fontSize: 30 }}>   </span>
-                                <div>
-                                    <h2 style={{ marginBottom: 5 }}> Sun  </h2>
-
-                                    <Space style={{ marginRight: 10 }}>
-                                        <svg className="Icon--icon--3wCKh SunriseSunset--sunIcon--TG205" name="sunrise-line" data-testid="Icon" aria-hidden="true" role="img" viewBox="0 0 24 24"><title>Sun Rise</title><path d="M10.862 6.052v5.329a.75.75 0 0 0 1.5 0V6.036l1.772 1.534a.75.75 0 0 0 .982-1.134l-3.003-2.601a.75.75 0 0 0-.982 0L8.128 6.436A.75.75 0 0 0 9.11 7.57l1.752-1.518zM21 19.128a.75.75 0 0 0 0-1.5H3.167a.75.75 0 1 0 0 1.5H21z"></path></svg>
-                                        <span>{weather?.weather[0].astronomy[0].sunrise} </span>
-                                    </Space>
-                                    <Space>
-                                        <svg className="Icon--icon--3wCKh SunriseSunset--sunIcon--TG205" name="sunset-line" data-testid="Icon" aria-hidden="true" role="img" viewBox="0 0 24 24"><title>Sunset</title><path d="M10.862 9.853L9.044 8.278a.75.75 0 1 0-.982 1.134l3.003 2.602a.75.75 0 0 0 .982 0l3.004-2.602a.75.75 0 0 0-.983-1.134l-1.706 1.478V4a.75.75 0 0 0-1.5 0v5.853zM21 19.075a.75.75 0 1 0 0-1.5H3.167a.75.75 0 1 0 0 1.5H21z"></path></svg>
-                                        <span>{weather?.weather[0].astronomy[0].sunset} </span>
-                                    </Space>
-                                </div>
-                            </Space>
-
-                            <Space size={'large'}>
-                                <span style={{ fontSize: 30 }}> 🌑️  </span>
-                                <div>
-                                    <h2 style={{ marginBottom: 0 }}> Moon  </h2>
-
-                                    <Space style={{ marginRight: 10 }}>
-                                        <svg className="Icon--icon--3wCKh moon" name="sunrise-line" data-testid="Icon" aria-hidden="true" role="img" viewBox="0 0 24 24"><title>Sun Rise</title><path d="M10.862 6.052v5.329a.75.75 0 0 0 1.5 0V6.036l1.772 1.534a.75.75 0 0 0 .982-1.134l-3.003-2.601a.75.75 0 0 0-.982 0L8.128 6.436A.75.75 0 0 0 9.11 7.57l1.752-1.518zM21 19.128a.75.75 0 0 0 0-1.5H3.167a.75.75 0 1 0 0 1.5H21z"></path></svg>
-                                        <span>{weather?.weather[0].astronomy[0].moonrise} </span>
-                                    </Space>
-                                    <Space>
-                                        <svg className="Icon--icon--3wCKh moon" name="sunset-line" data-testid="Icon" aria-hidden="true" role="img" viewBox="0 0 24 24"><title>Sunset</title><path d="M10.862 9.853L9.044 8.278a.75.75 0 1 0-.982 1.134l3.003 2.602a.75.75 0 0 0 .982 0l3.004-2.602a.75.75 0 0 0-.983-1.134l-1.706 1.478V4a.75.75 0 0 0-1.5 0v5.853zM21 19.075a.75.75 0 1 0 0-1.5H3.167a.75.75 0 1 0 0 1.5H21z"></path></svg>
-                                        <span>{weather?.weather[0].astronomy[0].moonset} </span>
-
-
-                                    </Space>
-                                    <br />
-                                    <span>{weather?.weather[0].astronomy[0].moon_phase} </span>
-                                </div>
-                            </Space>
-
-                        </Space> */}
 
                         <Table dataSource={hoursData} columns={columns} scroll={{ x: true }} />;
                     </TabPane>
@@ -355,18 +282,6 @@ function Dashboard(props: { country: string }) {
                         <h2 style={{ textAlign: 'left' }}> Weekly Forecast </h2>
 
                         {chartData.weekly.length > 0 && <LineChart data={chartData.weekly} type="date" />}
-                        {/* <div className='divide-content'>
-                        
-
-                        <div>
-                            <h3> Feel like: {chartData.weeklyData[0].maxtempC} {chartData.weeklyData[0].mintempC} °C  </h3>
-                            <h3> Humidity: {chartData.weeklyData[0].humidity}% </h3>
-                            <h3>Air Pressure: {props.weather?.current_condition[0].pressure} mb</h3>
-                            <h3>Wind Speed: {props.weather?.current_condition[0].windspeedKmph} km/h </h3> 
-    
-                        </div>
-                    </div> */}
-
 
                     </TabPane>
 
@@ -375,7 +290,7 @@ function Dashboard(props: { country: string }) {
                         {chartData.monthly.length > 0 && <LineChart data={chartData.monthly} type="Monthly" />}
                     </TabPane>
 
-                    <TabPane tab="Historically" key="4">
+                    <TabPane tab="History" key="4">
 
                         <Segmented options={['Daily', 'Weekly', 'Monthly']}
                             onChange={e => {
