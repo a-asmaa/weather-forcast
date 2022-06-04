@@ -21,26 +21,8 @@ function App() {
 
   useEffect(() => {
     setLoad(true)
-
-
-    // fetch("https://api.ipify.org?format=json").then(res => res.json()).then((data) =>
-
-    //   // Setting text of element P with id gfg
-    //   console.log(data)
-    // )
-
-    // if (navigator.geolocation) {
     try {
-      // navigator.geolocation.getCurrentPosition(
-      //   async (position) => {
-      //     const pos = {
-      //       lat: position.coords.latitude,
-      //       lng: position.coords.longitude,
-      //     };
 
-      //     console.log(pos);
-
-      // const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.lat}&longitude=${pos.lng}&localityLanguage=en`
       const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en`
 
       fetch(geoApiUrl).then(res => res.json()).then(async data => {
@@ -61,12 +43,6 @@ function App() {
       console.log(error);
       setLoad(false)
     }
-    //}
-    // } else {
-    // Browser doesn't support Geolocation
-    //   console.log("error");
-
-    // }
   }, [])
 
 

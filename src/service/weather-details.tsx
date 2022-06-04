@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { Data } from "../module/response";
 
 export const getInfo = async (lat: any, lng: any, days: number): Promise<Data | null> => {
@@ -24,14 +25,19 @@ export const getHistoricalData = async (city: string, country: string, startDate
 
     let data: Data | null = null;
 
-    await fetch(`https://api.worldweatheronline.com/premium/v1/past-weather.ashx?key=c8288bb8ea1f4fc59e1191916222605&format=JSON&q=${city},${country}&date=${startDate}&enddate=${endDate}"`,
+    await fetch(`https://api.worldweatheronline.com/premium/v1/past-weather.ashx?key=c8288bb8ea1f4fc59e1191916222605&format=JSON&q=${city},${country}&date=${startDate}&enddate=${endDate}`,
         {
             method: 'GET'
         })
         .then(response => response.json())
         .then(result => {
             console.log(result)
-            data = result.data
+
+            if (result.data.error) {
+                message.error(result.data.error[0].msg);
+            } else {
+                data = result.data
+            }
         })
         .catch(error => console.log('error', error));
 

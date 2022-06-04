@@ -25,7 +25,7 @@ img{
 
 
 .main-card{
-  background: url('./module/mountain.jpg');
+  background: url('./assets/mountain.jpg');
 } 
 /* 
 .ant-card-body{
@@ -48,6 +48,19 @@ img{
 }
 
 
+.SunriseSunset--sunIcon--TG205 {
+  fill: #febc11;
+  display: inline-block;
+  height: auto;
+  width: 20px;
+}
+
+.moon{
+  fill: gray;
+  display: inline-block;
+  height: auto;
+  width: 20px;
+}
 
 .card-container p {
   margin: 0;
