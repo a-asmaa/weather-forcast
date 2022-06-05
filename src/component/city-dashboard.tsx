@@ -92,11 +92,6 @@ function Dashboard(props: { country: string }) {
     const [date, setDate] = useState({ day: "1", month: "June", year: "2022" })
 
 
-    console.log(chartData);
-
-    const parseTime = d3.timeParse("%Y-%m-%d");
-    // console.log(parseTime("2022-05-31")); // Tue Jun 30 2015 00:00:00 GMT-0700 (PDT)
-
     useEffect(() => {
 
         setLoad(true)
@@ -116,7 +111,6 @@ function Dashboard(props: { country: string }) {
                 let count = 0;
                 while (_list.length < 10) {
 
-                    // console.log(_list, Number(data[i][count].time) > Number(date.replace(':', '').substring(0, 4)));
                     if ((Number(data[i][count].time) > Number(date.replace(':', '').substring(0, 4)) && i === 0) || i !== 0) {
                         _list.push({
                             key: Math.random(),
@@ -145,16 +139,12 @@ function Dashboard(props: { country: string }) {
                     }
                 }
 
-                console.log(_list);
-
                 seHours(_list)
 
                 // chart data 
 
                 let list: any[] = []
                 let list2: any[] = []
-
-                let parseTime = d3.timeParse("%Y-%m-%d");
 
                 for (let i = 0; i < weatherInfo.weather.length; i++) {
                     list.push({
@@ -170,8 +160,6 @@ function Dashboard(props: { country: string }) {
                         temp: Number(weatherInfo.ClimateAverages[0].month[i].absMaxTemp)
                     })
                 }
-
-                console.log(list, list2);
 
                 setChartData(prev => {
                     return {
@@ -295,7 +283,6 @@ function Dashboard(props: { country: string }) {
                         <Segmented options={['Daily', 'Weekly', 'Monthly']}
                             onChange={e => {
                                 setCategory(e)
-                                console.log(e);
                                 setChartData(prev => {
                                     return {
                                         ...prev,
@@ -370,9 +357,6 @@ function Dashboard(props: { country: string }) {
                                             })
                                         }
                                     }
-
-                                    console.log(list);
-
                                     setChartData(prev => {
                                         return {
                                             ...prev,

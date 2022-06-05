@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Chart } from '../module/chart';
 import * as d3 from 'd3';
 
-
-type Datum = { x: number, y: number }
 
 export default function LineChart(props: { data: Chart[], type: string }) {
 
     const d3Ref = useRef<SVGSVGElement>(null)
     const data = props.data
+
+    let _width = (window as Window).innerWidth - 10;
+    let _height = (window as Window).innerHeight - 10;
 
     useEffect(() => {
 
@@ -24,12 +25,12 @@ export default function LineChart(props: { data: Chart[], type: string }) {
                 }
             })
 
-            console.log(data, _list, props.type);
+            console.log(data, _list, props.type, (window as Window).innerWidth);
 
             // set the dimensions and margins of the graph
             var margin = { top: 20, right: 20, bottom: 50, left: 70 },
-                width = 760 - margin.left - margin.right,
-                height = 300 - margin.top - margin.bottom;
+                width = _width - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;
 
             // append the svg object to the body of the page
             const svg = d3.select(d3Ref.current!)
@@ -83,12 +84,12 @@ export default function LineChart(props: { data: Chart[], type: string }) {
             createGraph();
         }
 
-    }, [data])
+    }, [])
 
-
+    //viewBox={`10 10 ${_height} ${_width}`}
     return (
-        <div className='d3demo'>
-            <svg ref={d3Ref} ></svg>
+        <div className='d3demo' >
+            <svg style={{ width: "inherit" }} ref={d3Ref} ></svg>
         </div>
     )
 }
