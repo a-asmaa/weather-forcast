@@ -45,7 +45,7 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
 
 
             <Row style={{ marginTop: 40, justifyContent: 'center', flexWrap: 'wrap' }} >
-                <Col xs={20} md={8} lg={6} xl={5}>
+                <Col xs={20} md={8} lg={8} xl={8}>
                     <Card className='main-card' bordered={false} style={{ textAlign: 'left', borderRadius: 10 }}>
 
                         <Space size='large' >
@@ -62,7 +62,7 @@ function Home(props: { weather: Data, data: { country: string, city: string } })
 
                     </Card>
                 </Col>
-                <Col xs={20} md={16} lg={14} xl={13} className="d-flex flex-column justify-content-between">
+                <Col xs={20} md={16} lg={14} xl={12} className="d-flex flex-column justify-content-between">
                     <Card bordered={false} style={{ padding: 14, borderRadius: 10 }}>
 
                         <Space className="ant-row" size='large'>
